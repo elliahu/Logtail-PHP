@@ -9,8 +9,15 @@ require "vendor/autoload.php";
 use Monolog\Logger;
 use Logtail\Monolog\LogtailHandler;
 
+# Check for arguments
+if($argc != 2){
+    # No argument was provided
+    echo "No source token was provided. Please, run the script as followed:\n php index.php <source-token>\n";
+    exit;
+}
+
 $logger = new Logger("logtail-source");
-$logger->pushHandler(new LogtailHandler("<source-token>"));
+$logger->pushHandler(new LogtailHandler($argv[1]));
 
 # Below you can see available methods that can be used to send logs to logtail.
 # Each method corresponds to Monologs log level.
