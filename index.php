@@ -10,7 +10,7 @@ use Monolog\Logger;
 use Logtail\Monolog\LogtailHandler;
 
 $logger = new Logger("logtail-source");
-$logger->pushHandler(new LogtailHandler("98Q6bzjWk35nEjDixBPMzcfG"));
+$logger->pushHandler(new LogtailHandler("<source-token>"));
 
 # Below you can see available methods that can be used to send logs to logtail.
 # Each method corresponds to Monologs log level.

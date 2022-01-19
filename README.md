@@ -4,13 +4,46 @@ Collect logs from your PHP projects, including Laravel, Symfony, CodeIgniter, Ca
 
 # Installation
 
-You can install the Logtail client library using Composer as you would with any other PHP package. Run the following command in the terminal and make sure that you are currently in the directory of the PHP project you wish to log.
+You can install the Logtail client library using Composer as you would with any other PHP package. 
+
+## Installing composer
+If you are already familiar with the composer and have the composer already installed, you can proceed to the next step.
+
+First, update the packages index and install the necessary requirements:
+```bash
+sudo apt update
+sudo apt install wget php-cli php-zip unzip
+```
+Then, download the composer installer (composer installer will be downloaded to the current working directory):
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+```
+Now, check if the donwload is valid (or corrupted):
+```bash
+HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
+
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+```
+You should see the following output:
+```bash
+Output:
+Installer verified
+```
+Lastly, install the composer
+```bash
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+```
+
+## Installing Logtail to existing PHP project
 
 To add Logtail client library to existing project, run the following command:
 ```bash
 composer require logtail/monolog-logtail
 ```
-To install the example application download `index.php`, `composer.json`, `composer.lock` files and run the command below:
+
+## Installing Logtail example application
+
+To install the example application, clone the current git repository or download all the files in the repository to the select working directory. In that directory, run the following command:
 ```bash
 composer update
 ```
@@ -68,6 +101,17 @@ $logger->alert("Something terrible happend! Imidiate action is required!");
 $logger->emergency("Application just crashed! Imidiate action is required!");
 
 echo "All done, you can check your logs in the control panel. \n";
+```
+
+## Running the example application
+You can run the application by running the following command:
+```bash
+php index.php
+```
+You should see the following output:
+```text
+Output:
+All done, you can check your logs in the control panel.
 ```
 
 This will create and send a total of 8 log messages to the Logtail. Each message corresponds to a specific log level. Detail explanation of the code above follows below.
