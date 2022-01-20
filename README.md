@@ -1,45 +1,21 @@
-# Logtail PHP
+# Logging PHP application with Logtail
 
-Collect logs from your PHP projects, including Laravel, Symfony, CodeIgniter, CakePHP, Zend, and others. Logtail client library is built upon the well-known and highly popular logging library Monolog.
+Collect logs from your PHP projects, including Laravel, Symfony, CodeIgniter, CakePHP, Zend, and others. Logtail client library is built upon the well-known and highly popular logging library Monolog. This guide also provides example PHP application which you can install and run with just a few simple steps. 
 
 # Installation
 
 You can install the Logtail client library using Composer as you would with any other PHP package. 
-
-## Installing composer
 If you are already familiar with the composer and have the composer already installed, you can proceed to the next step.
+If you don't have composer installed, you can follow the steps in the [official guide](https://getcomposer.org/doc/00-intro.md).
 
-First, update the packages index and install the necessary requirements:
-```bash
-sudo apt update
-sudo apt install wget php-cli php-zip unzip
-```
-Then, download the composer installer (composer installer will be downloaded to the current working directory):
-```bash
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-```
-Now, check if the donwload is valid (or corrupted):
-```bash
-HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
+## Adding Logtail to existing PHP project
 
-php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-```
-You should see the following output:
-```bash
-Output:
-Installer verified
-```
-Lastly, install the composer
-```bash
-sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-```
-
-## Installing Logtail to existing PHP project
-
+Already have a PHP project you want to add logtail to?
 To add Logtail client library to existing project, run the following command:
 ```bash
 composer require logtail/monolog-logtail
 ```
+You can find more about basic composer usage in the [official guide](https://getcomposer.org/doc/01-basic-usage.md).
 
 ## Installing Logtail example application
 
@@ -48,68 +24,6 @@ To install the example application, clone the current git repository or download
 composer update
 ```
 This command will install all dependencies from `composer.json` file and lock them in `composer.lock` file.
-
-# Example application
-
-The following script presents Logtail integration for PHP. 
-
-```php
-<?php
-# Setting autoloader
-require "vendor/autoload.php";
-
-# Setting logger
-use Monolog\Logger;
-use Logtail\Monolog\LogtailHandler;
-
-# Check for arguments
-if($argc != 2){
-    # No argument was provided
-    echo "No source token was provided. Please, run the script as followed:\n php index.php <source-token>\n";
-    exit;
-}
-
-$logger = new Logger("logtail-source");
-$logger->pushHandler(new LogtailHandler($argv[1]));
-
-# Below you can see available methods that can be used to send logs to logtail.
-# Each method corresponds to Monologs log level.
-# You can also add additional context information in form of an array to any logging method and pass it as the
-# second argument of the select method (as shown in the warn() method ).
-
-# Send debug information using debug() method
-$logger->debug("Logtail logger is ready!");
-
-# Send information about interesting events using info() method
-$logger->info("An interesting event occured!");
-
-# Send information about normal but significant events using notice() method
-$logger->notice("Sending notice");
-
-# Send information about exceptional occurrences that might not be errors using warning() method
-# You can also pass additional context information to any logging method in form of an array as the second argument
-$logger->warning("Something is not quite right ...",[
-    "additional_data" => [
-        "item1" => "value1",
-        "item2" => "value2"
-    ]
-]);
-
-# Send information about runtime errors that might not require an immediate action using error() method
-$logger->error("Oops! An runtime ERROR occurred!");
-
-# Send information about critical conditions using critical() method
-$logger->critical("Oh no! An critical event occurred!");
-
-# Send an alert message about events for which action must be taken immediately using alert() method
-$logger->alert("Something terrible happend! Imidiate action is required!");
-
-# Send an emergency message about events that forced the application to crash using emergency() method 
-$logger->emergency("Application just crashed! Imidiate action is required!");
-
-
-echo "All done, you can check your logs in the control panel. \n";
-```
 
 ## Running the example application
 You can run the application by running the following command and don't forget to change the `<source-token>` to the actual source token which you can find in your source settings.
@@ -124,11 +38,15 @@ All done, you can check your logs in the control panel.
 
 This will create and send a total of 8 log messages to the Logtail. Each message corresponds to a specific log level. Detail explanation of the code above follows below.
 
-# Setup
+# Example application explained
+
+The section below explains basic usage of the Logtail logger in the example PHP application. You can apply this to any existing or new PHP project.
+
+## Setup
 
 First, if you haven’t done it already, require an autoloader file in which the class autoloader is defined. This autoloader will automatically require a class definition file whenever the class is called.
 
-Then, you need to use the `Monolog\Logger` and `Logtail\Monolog\LogtailHandler` in which the logger is defined.
+Then, you need to use the `Monolog\Logger` and `Logtail\Monolog\LogtailHandler` namespaces in which the logger is defined.
 
 ```php
 # Setting autoloader
@@ -176,7 +94,7 @@ monolog.channel_string="shoping-cart"
 
 This will only show logs from the `shoping-cart` channel.
 
-# Logging
+## Logging
 
 The `$logger` variable (instance of the `Logger` class) we have created in the setup has a number of methods used to send the logs to Logtail. Each of these methods corresponds to the Monolog log level. 
 
