@@ -32,11 +32,10 @@ php index.php <source-token>
 ```
 You should see the following output:
 ```text
-Output:
 All done, you can check your logs in the control panel.
 ```
 
-This will create and send a total of 8 log messages to the Logtail. Each message corresponds to a specific log level. Detail explanation of the code above follows below.
+This will create and send a total of 8 log messages to the Logtail. Each message corresponds to a specific log level. Detail explanation follows below.
 
 # Example application explained
 
@@ -157,7 +156,7 @@ This will output the following JSON data:
 }
 ```
 
-## Additional context information
+## Additional context
 
 You can attach additional context information to the actual log message which you can review later and which will help you troubleshoot your application by providing useful information. 
 
