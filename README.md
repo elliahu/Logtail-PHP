@@ -7,6 +7,7 @@ Collect logs from your PHP projects, including Laravel, Symfony, CodeIgniter, Ca
 You can install the Logtail client library using Composer as you would with any other PHP package. 
 If you are already familiar with the composer and have the composer already installed, you can proceed to the next step.
 If you don't have composer installed, you can follow the steps in the [official guide](https://getcomposer.org/doc/00-intro.md).
+Suported version PHP 8 or newer and Composer 1.10.1 or newer
 
 ## Adding Logtail to existing PHP project
 
